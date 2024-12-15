@@ -4,14 +4,14 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 def load_predictions():
     """Load predictions from both models"""
-    lstm_pred = pd.read_csv('../data/lstm_forecast.csv')
-    xgb_pred = pd.read_csv('../data/xgboost_forecast.csv')
+    lstm_pred = pd.read_csv('data/lstm_forecast.csv')
+    xgb_pred = pd.read_csv('data/xgboost_forecast.csv')
     return lstm_pred, xgb_pred
 
 def load_metrics():
     """Load metrics from both models"""
-    lstm_metrics = pd.read_csv('../data/lstm_metrics.csv')
-    xgb_metrics = pd.read_csv('../data/xgboost_metrics.csv')
+    lstm_metrics = pd.read_csv('data/lstm_metrics.csv')
+    xgb_metrics = pd.read_csv('data/xgboost_metrics.csv')
     return lstm_metrics, xgb_metrics
 
 def calculate_weights(lstm_metrics, xgb_metrics):
@@ -69,11 +69,11 @@ def main():
         'Ensemble_Prediction': ensemble_pred
     })
     
-    results_df.to_csv('../data/final_forecast.csv', index=False)
+    results_df.to_csv('data/final_forecast.csv', index=False)
     
     # Save ensemble metrics
     metrics_df = pd.DataFrame([metrics])
-    metrics_df.to_csv('../data/ensemble_metrics.csv', index=False)
+    metrics_df.to_csv('data/ensemble_metrics.csv', index=False)
     
     print("\nEnsemble predictions completed!")
     print("Metrics:", metrics)

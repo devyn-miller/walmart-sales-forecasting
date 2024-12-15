@@ -9,7 +9,7 @@ import os
 
 def load_data():
     """Load the preprocessed training data"""
-    train_data = pd.read_csv('../data/clean_train_data.csv')
+    train_data = pd.read_csv('data/clean_train_data.csv')
     train_data['Date'] = pd.to_datetime(train_data['Date'])
     return train_data
 
@@ -80,7 +80,7 @@ def main():
     data = load_data()
     
     # Create models directory if it doesn't exist
-    os.makedirs('../models', exist_ok=True)
+    os.makedirs('models', exist_ok=True)
     
     # Prepare features
     X, y = prepare_features(data)
@@ -94,7 +94,7 @@ def main():
     model = train_xgboost(X_train, y_train, X_val, y_val)
     
     # Save the model
-    joblib.dump(model, '../models/xgboost_model.pkl')
+    joblib.dump(model, 'models/xgboost_model.pkl')
     
     # Make predictions
     y_pred = model.predict(X_val)
@@ -104,14 +104,14 @@ def main():
     
     # Save metrics
     metrics_df = pd.DataFrame([metrics])
-    metrics_df.to_csv('../data/xgboost_metrics.csv', index=False)
+    metrics_df.to_csv('data/xgboost_metrics.csv', index=False)
     
     # Save predictions
     predictions_df = pd.DataFrame({
         'Actual': y_val,
         'Predicted': y_pred
     })
-    predictions_df.to_csv('../data/xgboost_forecast.csv', index=False)
+    predictions_df.to_csv('data/xgboost_forecast.csv', index=False)
     
     # Save feature importance
     feature_importance = pd.DataFrame({
@@ -119,7 +119,7 @@ def main():
         'Importance': model.feature_importances_
     })
     feature_importance = feature_importance.sort_values('Importance', ascending=False)
-    feature_importance.to_csv('../data/feature_importance.csv', index=False)
+    feature_importance.to_csv('data/feature_importance.csv', index=False)
     
     print("XGBoost Training completed!")
     print("Metrics:", metrics)

@@ -4,10 +4,10 @@ from datetime import datetime
 
 def load_data():
     """Load all necessary data for Power BI"""
-    forecast_data = pd.read_csv('../data/final_forecast.csv')
-    clean_train = pd.read_csv('../data/clean_train_data.csv')
-    metrics = pd.read_csv('../data/ensemble_metrics.csv')
-    feature_importance = pd.read_csv('../data/feature_importance.csv')
+    forecast_data = pd.read_csv('data/final_forecast.csv')
+    clean_train = pd.read_csv('data/clean_train_data.csv')
+    metrics = pd.read_csv('data/ensemble_metrics.csv')
+    feature_importance = pd.read_csv('data/feature_importance.csv')
     return forecast_data, clean_train, metrics, feature_importance
 
 def prepare_time_series_data(forecast_data, clean_train):
@@ -76,19 +76,19 @@ def main():
     print("Exporting data for Power BI...")
     
     # Main forecast results
-    powerbi_data.to_csv('../powerbi/forecast_results.csv', index=False)
+    powerbi_data.to_csv('powerbi/forecast_results.csv', index=False)
     
     # Store-level metrics
-    store_metrics.to_csv('../powerbi/store_metrics.csv', index=False)
+    store_metrics.to_csv('powerbi/store_metrics.csv', index=False)
     
     # Holiday impact analysis
-    holiday_impact.to_csv('../powerbi/holiday_impact.csv', index=False)
+    holiday_impact.to_csv('powerbi/holiday_impact.csv', index=False)
     
     # Feature importance
-    feature_importance.to_csv('../powerbi/feature_importance.csv', index=False)
+    feature_importance.to_csv('powerbi/feature_importance.csv', index=False)
     
     # Model performance metrics
-    metrics.to_csv('../powerbi/model_metrics.csv', index=False)
+    metrics.to_csv('powerbi/model_metrics.csv', index=False)
     
     print("Data export completed! Files are ready for Power BI visualization.")
     print("\nExported files:")

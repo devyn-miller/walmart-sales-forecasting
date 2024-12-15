@@ -11,7 +11,7 @@ import os
 
 def load_data():
     """Load the preprocessed training data"""
-    train_data = pd.read_csv('../data/clean_train_data.csv')
+    train_data = pd.read_csv('data/clean_train_data.csv')
     train_data['Date'] = pd.to_datetime(train_data['Date'])
     return train_data
 
@@ -65,12 +65,12 @@ def main():
     data = load_data()
     
     # Create scalers directory if it doesn't exist
-    os.makedirs('../models', exist_ok=True)
+    os.makedirs('models', exist_ok=True)
     
     # Scale the features
     scaler = MinMaxScaler()
     data['Weekly_Sales'] = scaler.fit_transform(data[['Weekly_Sales']])
-    joblib.dump(scaler, '../models/sales_scaler.pkl')
+    joblib.dump(scaler, 'models/sales_scaler.pkl')
     
     # Prepare sequences
     X, y = prepare_sequences(data)
@@ -91,7 +91,7 @@ def main():
     
     history = model.fit(
         X_train, y_train,
-        epochs=50,
+        epochs=5,
         batch_size=32,
         validation_data=(X_val, y_val),
         callbacks=[early_stopping],
@@ -99,7 +99,7 @@ def main():
     )
     
     # Save the model
-    model.save('../models/lstm_model.h5')
+    model.save('models/lstm_model.h5')
     
     # Make predictions
     y_pred = model.predict(X_val)
@@ -113,14 +113,14 @@ def main():
     
     # Save metrics
     metrics_df = pd.DataFrame([metrics])
-    metrics_df.to_csv('../data/lstm_metrics.csv', index=False)
+    metrics_df.to_csv('data/lstm_metrics.csv', index=False)
     
     # Save predictions
     predictions_df = pd.DataFrame({
         'Actual': y_val.flatten(),
         'Predicted': y_pred.flatten()
     })
-    predictions_df.to_csv('../data/lstm_forecast.csv', index=False)
+    predictions_df.to_csv('data/lstm_forecast.csv', index=False)
     
     print("LSTM Training completed!")
     print("Metrics:", metrics)

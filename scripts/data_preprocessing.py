@@ -8,10 +8,10 @@ warnings.filterwarnings('ignore')
 def load_data():
     """Load all required datasets"""
     print("Loading datasets...")
-    train_df = pd.read_csv('../data/train.csv')
-    test_df = pd.read_csv('../data/test.csv')
-    features_df = pd.read_csv('../data/features.csv')
-    stores_df = pd.read_csv('../data/stores.csv')
+    train_df = pd.read_csv('data/train.csv')
+    test_df = pd.read_csv('data/test.csv')
+    features_df = pd.read_csv('data/features.csv')
+    stores_df = pd.read_csv('data/stores.csv')
     
     return train_df, test_df, features_df, stores_df
 
@@ -93,8 +93,8 @@ def main():
     
     # Merge datasets
     # First merge train/test with features
-    train_merged = pd.merge(train_df, features_df, on=['Store', 'Date'], how='left')
-    test_merged = pd.merge(test_df, features_df, on=['Store', 'Date'], how='left')
+    train_merged = pd.merge(train_df, features_df, on=['Store', 'Date'], how='left', suffixes=('', '_feature'))
+    test_merged = pd.merge(test_df, features_df, on=['Store', 'Date'], how='left', suffixes=('', '_feature'))
     
     # Then merge with stores data
     train_final = pd.merge(train_merged, stores_df, on='Store', how='left')
@@ -115,8 +115,8 @@ def main():
     
     # Save processed data
     print("Saving processed data...")
-    train_final.to_csv('../data/clean_train_data.csv', index=False)
-    test_final.to_csv('../data/clean_test_data.csv', index=False)
+    train_final.to_csv('data/clean_train_data.csv', index=False)
+    test_final.to_csv('data/clean_test_data.csv', index=False)
     print("Data preprocessing completed!")
 
 if __name__ == "__main__":
